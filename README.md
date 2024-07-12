@@ -4,7 +4,7 @@ author:
 title: "`easytm`: An easy way to text mining in R."
 ---
 
-[^1]
+[^1][^9]
 
 # Abstract {#abstract .unnumbered}
 
@@ -617,3 +617,5 @@ Access.
     words.
 
 [^8]: 30th June, 2024
+
+[^9]: Musunuru, K. (2024). `easytm`: An easy way to text mining in R. Available at https://github.com/Kamakshaiah/easytm. 
