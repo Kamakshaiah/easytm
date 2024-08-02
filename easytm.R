@@ -12,7 +12,7 @@ for (i in pcks){
 }
 
 for ( i in pcks){
-  library(i)
+  eval(bquote(library(.(i))))
 }
 
 preps <- c('.', ',', ':', ';', 'upon', 'Upon', 'under', 'Under', 'less', 'Less', 'more', 'More', 'our', 'Our', 'Over', 'over', 'an', 'by', 'There', 'there', 'We', 'or', 'these', 'that', 'we', 'find', 'finds', 'finding', 'found', 'but', 'by', '\n', '\t', 'in', 'on', 'the', 'The', 'this', 'This', 'with', 'and', 'And', 'be', 'Be', 'of', 'would', 'could', 'under', 'Under', 'above', 'Above', 'Below', 'below', 'is', 'was', 'being', 'Being', 'to', 'To', 'With', 'which', 'Which', 'shall', 'Shall', 'On', 'not', 'Not', 'None', 'none', 'made', 'Made', 'Make', 'make', 'it', 'its', 'It', 'has', 'Has', 'from', 'From', 'For', 'for', 'been', 'Been', 'Being', 'being', 'a', 'A', 'as', 'As', 'can', 'could', 'Can', 'Could', 'using', 'Using', 'many', 'Many', 'also', 'Also', 'use', 'Use', 'used', 'Used')
@@ -261,3 +261,47 @@ selectFeatures <- function(dataset, target = NA){
 #   }
 #   }
 # }
+
+factanalplot <- function(ds, l1=NA, l2=NA, tl = NA, xlim = NA, ylim = NA, cex = NA){
+  if(!is.na(l2)){
+    plot(l1,
+         l2,
+         xlab = "Factor 1",
+         ylab = "Factor 2",
+         ylim = ylim,
+         xlim = xlim, cex =cex,
+         main = tl)
+    abline(h = 0, v = 0)
+    text(l1 - 0.08,
+         l2 + 0.08,
+         colnames(ds), cex = cex,
+         col = "blue")
+    abline(h = 0, v = 0)  
+  } else {
+    plot(l1,
+         ylim = ylim,
+         xlim = xlim, cex = cex,
+         main = tl)
+    abline(h = 0, v = 0)
+    text(l1 - 0.08,
+         colnames(ds), cex = cex, 
+         col = "blue")
+    abline(h = 0, v = 0)
+  }
+}
+
+selectFeaturesAndMakeOutputs <- function(ds, term = NA, nc = NA, outputs = TRUE, outputpaths = NA){
+  trm_ <- selectFeatures(ds, term)
+  
+  df_ <- ds[rownames(trm_$features)]
+  sums <- sapply(digitaldf, function(x) c(summary(x), type = class(x)))
+  fafit <- factanal(df_, nc)
+  
+  if (outputs == TRUE){
+    write.csv(sums, outputpath[1])
+    write.csv(fafit$loadings, outputpath[2])
+  } else {
+    return(list(trm_))
+  }
+  
+}
