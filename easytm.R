@@ -1,22 +1,35 @@
 # convert path
 # D:\Research\PAPERS\finance\cryptocurrency
 
-if (!"tm" %in% installed.packages()){
-  install.packages("tm")
-} else{
-  print('the package is already installed!')
+pcks <- c('tm', 'caret', 'Boruta', 'TH.data')
+
+for (i in pcks){
+  if (!i %in% installed.packages()){
+    install.packages(i)
+  } else{
+    print('the package is already installed!')
+  }
 }
 
-library(tm)
-print("loaded 'tm' package")
+for ( i in pcks){
+  library(i)
+}
 
-preps <- c('in', 'on', 'the', 'The', 'this', 'This', 'with', 'and', 'And', 'be', 'Be', 'of', 'would', 'could', 'under', 'Under', 'above', 'Above', 'Below', 'below', 'is', 'was', 'being', 'Being', 'to', 'To', 'With', 'which', 'Which', 'shall', 'Shall', 'On', 'not', 'Not', 'None', 'none', 'made', 'Made', 'Make', 'make', 'it', 'its', 'It', 'has', 'Has', 'from', 'From', 'For', 'for', 'been', 'Been', 'Being', 'being', 'a', 'A', 'as', 'As', 'can', 'could', 'Can', 'Could', 'using', 'Using', 'many', 'Many', 'also', 'Also', 'use', 'Use', 'used', 'Used')
+preps <- c('.', ',', ':', ';', 'upon', 'Upon', 'under', 'Under', 'less', 'Less', 'more', 'More', 'our', 'Our', 'Over', 'over', 'an', 'by', 'There', 'there', 'We', 'or', 'these', 'that', 'we', 'find', 'finds', 'finding', 'found', 'but', 'by', '\n', '\t', 'in', 'on', 'the', 'The', 'this', 'This', 'with', 'and', 'And', 'be', 'Be', 'of', 'would', 'could', 'under', 'Under', 'above', 'Above', 'Below', 'below', 'is', 'was', 'being', 'Being', 'to', 'To', 'With', 'which', 'Which', 'shall', 'Shall', 'On', 'not', 'Not', 'None', 'none', 'made', 'Made', 'Make', 'make', 'it', 'its', 'It', 'has', 'Has', 'from', 'From', 'For', 'for', 'been', 'Been', 'Being', 'being', 'a', 'A', 'as', 'As', 'can', 'could', 'Can', 'Could', 'using', 'Using', 'many', 'Many', 'also', 'Also', 'use', 'Use', 'used', 'Used')
+# length(preps)
 
 convertPath <- function(){
   path <- readline() # paste the path
   pathch <- gsub('\\\\', '/', path)
   return(pathch)
 }
+
+plotWordVec <- function(v1, lbls){
+  plot(v1)
+  text(v1, labels = lbls)
+}
+
+
 
 # convertPath()
 
@@ -58,9 +71,15 @@ convertAbstractToDataSet <- function(abstract){
 # names(dvector)
 
 # subset(dvector, Freq > 1)
-cleanData <- function(data_, th=NULL){
-  return(subset(data_, Freq > th & !data_$Var1 %in% preps))  
+cleanData <- function(data_){
+  return(subset(data_, !data_$Var1 %in% preps))  
 }
+
+searchWord <- function(trm=NA, v1=NA){
+  n_ <- grep(as.character(trm), v1[, 1])
+  return(v1[n_, ])
+}
+
 
 # cdata <- cleanData(dvector, th=1)
 
@@ -73,6 +92,7 @@ plotDataSet <- function(dset){
 
 # abscorp <- VCorpus((VectorSource(t(abs))))
 
+# dont use
 makeCorpus <- function(abs){
   corp_ <- VCorpus((VectorSource(t(abs))))
   print(corp_)
@@ -97,6 +117,11 @@ makeCorpus <- function(abs){
 # head(adf)[, 1:3]
 # adf[, 'context']
 
+# n <- grep('ability', names(df_)[1:200])
+# litdf <- df_[, -c(1:n)]
+# dim(df_)
+# head(names(df_))
+
 cleanCorpusAndMakeDF <- function(abs, DF=FALSE, sparcity = NULL){
   abscorp <- VCorpus((VectorSource(t(abs))))
   corp_ <- tm_map(abscorp, stripWhitespace)
@@ -108,10 +133,14 @@ cleanCorpusAndMakeDF <- function(abs, DF=FALSE, sparcity = NULL){
   
   if (DF & !is.null(sparcity)){
     dataframe <- data.frame(as.matrix(removeSparseTerms(adtm, sparcity)))
+    n <- grep('ability', names(dataframe)[1:200])
+    dataframe <- dataframe[, -c(1:n)]
     return(dataframe)
     print(dim(dataframe))
   } else {
     dataframe <- data.frame(as.matrix(adtm))
+    n <- grep('ability', names(dataframe)[1:200])
+    dataframe <- dataframe[, -c(1:n)]
     return(dataframe)
   }
 }
@@ -136,6 +165,24 @@ removePreps <- function(dataframe, preps){
 # head(dataframe_new)
 # names(dataframe_new)
 
+searchPattern <- function(trm=NA, dataf){
+  n <- grep(as.character(trm), names(dataf))
+  for (i in n){
+    print(names(dataf)[i])
+  }
+  return(n)
+}
+
+searchVariable <- function(trm, df_, output = FALSE){
+  n <- grep(as.character(trm), names(df_))
+  out <- df_[, n]
+  if (output == TRUE){
+    return(out)  
+  } else {
+    print(list(pattern = names(out), indices = n))
+  }
+}
+
 simdf <- function(r=NA){
   x <- matrix(runif(100), 10, 10)
   x <- as.data.frame(x)
@@ -144,6 +191,14 @@ simdf <- function(r=NA){
   } else {
     return(round(x, r))
   }
+}
+
+makeDfFromWord <- function(trm=NA, df1, df2){
+  r1 <- searchWord('fake', df1)
+  r2 <- searchWord('fake', df2)
+  df_ <- rbind(r1, r2)
+  rownames(df_) <- c('d1', 'd2')
+  return(df_)
 }
 
 appendDf <- function(xdf, grcrs, ydf=NA){
@@ -156,3 +211,53 @@ appendDf <- function(xdf, grcrs, ydf=NA){
   }
 }
 
+# feature selection
+
+selectFeatures <- function(dataset, target = NA){
+  boruta_output <- Boruta(eval(as.name(target)) ~ ., data=na.omit(dataset), doTrace=0)  
+  
+  roughFixMod <- TentativeRoughFix(boruta_output)
+  boruta_signif <- getSelectedAttributes(roughFixMod)
+  
+  imps <- attStats(roughFixMod)
+  imps2 = imps[imps$decision != 'Rejected', c('meanImp', 'decision')]
+  orig_names_len <- length(names(dataset))
+  final_names_len <- length(names(imps2))
+  
+  out <- list(onl = orig_names_len, final_nlen =  final_names_len, features = imps2, bo = boruta_output)
+  return(out)  
+}
+
+# plot(boruta_output, cex.axis=.7, las=2, xlab="", main="Variable Importance")
+
+# selectFeatures <- function(dataset, target = NA, tentative = TRUE, decision = 'rejected'){
+#   boruta_output <- Boruta(eval(as.name(target)) ~ ., data=na.omit(dataset), doTrace=0)  
+#   boruta_signif <- getSelectedAttributes(boruta_output, withTentative = TRUE) 
+#   
+#   plot(boruta_output, cex.axis=.7, las=2, xlab="", main="Variable Importance") 
+#   
+#   if (tentative==TRUE){
+#     if (decision == 'rejected'){
+#       imps <- attStats(boruta_signif)
+#       imps2 = imps[imps, c('meanImp', 'decision')]
+#       return(imps2[order(-imps2$meanImp), ])   
+#     } else {
+#       imps <- attStats(boruta_signif)
+#       imps2 = imps[imps$decision != 'Rejected', c('meanImp', 'decision')]
+#       return(imps2[order(-imps2$meanImp), ]) 
+#     }
+#   } else {
+#     roughFixMod <- TentativeRoughFix(boruta_output)
+#     boruta_signif <- getSelectedAttributes(roughFixMod)
+#     
+#     if (decision == 'rejected'){
+#       imps <- attStats(roughFixMod)
+#       imps2 = imps[imps$decision != 'Rejected', c('meanImp', 'decision')]
+#       return(imps2[order(-imps2$meanImp), ])  
+#     } else {
+#        imps <- attStats(roughFixMod)
+#       imps2 = imps[c('meanImp', 'decision')]
+#       return(imps2[order(-imps2$meanImp), ])
+#   }
+#   }
+# }
