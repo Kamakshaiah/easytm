@@ -262,8 +262,8 @@ selectFeatures <- function(dataset, target = NA){
 #   }
 # }
 
-factanalplot <- function(ds, l1=NA, l2=NA, tl = NA, xlim = NA, ylim = NA, cex = NA){
-  if(!is.na(l2)){
+factanalTwoFactorPlot <- function(ds, l1=NA, l2=NA, tl = NA, xlim = NA, ylim = NA, cex = NA){
+  
     plot(l1,
          l2,
          xlab = "Factor 1",
@@ -277,7 +277,7 @@ factanalplot <- function(ds, l1=NA, l2=NA, tl = NA, xlim = NA, ylim = NA, cex = 
          colnames(ds), cex = cex,
          col = "blue")
     abline(h = 0, v = 0)  
-  } else {
+  
     plot(l1,
          ylim = ylim,
          xlim = xlim, cex = cex,
@@ -287,7 +287,7 @@ factanalplot <- function(ds, l1=NA, l2=NA, tl = NA, xlim = NA, ylim = NA, cex = 
          colnames(ds), cex = cex, 
          col = "blue")
     abline(h = 0, v = 0)
-  }
+  
 }
 
 selectFeaturesAndMakeOutputs <- function(ds, term = NA, nc = NA, outputs = TRUE, outputpaths = NA){
@@ -301,7 +301,21 @@ selectFeaturesAndMakeOutputs <- function(ds, term = NA, nc = NA, outputs = TRUE,
     write.csv(sums, outputpath[1])
     write.csv(fafit$loadings, outputpath[2])
   } else {
-    return(list(trm_))
+    return(trm_$features)
   }
+  
+}
+
+factanalSingleFactorPlot <- function(ds, l1=NA, tl = NA, xlim = NA, ylim = NA, cex = NA){
+  
+  plot(l1,
+       ylim = ylim,
+       xlim = xlim, cex =cex,
+       main = tl)
+  abline(h = 0, v = 0)
+  text(l1, 
+       colnames(ds), cex = cex,
+       col = "blue", pos= 3)
+  abline(h = 0, v = 0)  
   
 }
