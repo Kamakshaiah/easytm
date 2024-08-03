@@ -4,7 +4,7 @@ author:
 title: "`easytm`: An easy way to text mining in R."
 ---
 
-[^1]
+[^1] [^2]
 
 # Abstract {#abstract .unnumbered}
 
@@ -80,7 +80,7 @@ The script `easytm` helps the users performing trivial tasks rather
 painlessly. No need to use `readlines()` for paths, `grep()`, for
 sub-setting data sets, and `file.path()` for making file paths etc. The
 script is easy for implementation, just execute `source(easytm.R)` in R
-console to use it for data mining and analysis. [^2] *It's free,
+console to use it for data mining and analysis. [^3] *It's free,
 however, no guarantee or warranties are applied for any damages or
 losses of what-so-ever, users discretion is advised and required*.
 
@@ -228,7 +228,7 @@ spreadsheets. This section demonstrates the procedure as how data can be
 obtained such as the one from Comma Separated Value (*.csv*) file. For
 this, I scraped certain Google search data for a query "how to scrape
 Google search titles in R" using `rvest` package and the titles were
-saved in *gtitles.csv*. [^3][^4]
+saved in *gtitles.csv*. [^4][^5]
 
     > filepath <- convertPath()
     D:\Work\R Scripts\textmining\easytm
@@ -273,7 +273,7 @@ No need to use whole bunch of functions of `tm` package for mining. The
 function `cleanCorpusAndMakeDF()` replaces half dozen functions of `tm`
 package. The function `searchPattern()` can be used for finding patterns
 in the data frame. For instance, the pattern, "scrape" can be found in
-the DTM as shown below. [^5]
+the DTM as shown below. [^6]
 
     > n_ <- searchPattern('scrape', ttlsdf)
     [1] "googlescraperr"
@@ -305,7 +305,7 @@ abstracts into a data variables or matrices worthy for investigation. An
 abstract is retrieved using a search string "marketing is fake". Google
 scholar has retrieved 4,64,000 results in 0.07 seconds. Let us see, how
 many times words "marketing" and "fake" were repeated in the very first
-abstract.[^6] [@16]
+abstract.[^7] [@16]
 
     firstab <- 'There is growing concern amongst policy makers, managers and 
                 academic researchers over the role that social media plays in 
@@ -382,7 +382,7 @@ Let's do the same exercise for the second abstract.[@17]
 You can clean the data frame and avoid a few unwanted terms or other
 characters using `cleanData()`. The function `cleanData()` works based
 on object `preps` in the script. This object is collection of a few
-unwanted words.[^7] The function `plotWordVec()` is useful to make text
+unwanted words.[^8] The function `plotWordVec()` is useful to make text
 plot.[1](#wvp){reference-type="ref" reference="wvp"}
 
     plotWordVec(clnab[, 2], lbls = clnab[, 1])
@@ -405,7 +405,7 @@ This section demonstrates how to process data from files where the text
 is kept in a few rows each row representing a document. For the purpose
 of demonstration certain text was retrieved from Scopus against the
 search string or query "*marketing is fake*". Scopus retrieved 539
-abstracts and the the data was obtained in CSV file.[^8] Following is
+abstracts and the the data was obtained in CSV file.[^9] Following is
 the procedure to make DTM from the data.
 
     abs <- makeAbstracts(dataf)
@@ -536,56 +536,63 @@ responses, with *consumer* showing some significant association with
 either predictor.
 
 ::: thebibliography
-Wei, Li., Brian, Mak. (2017). Derivation of Document Vectors from
-Adaptation of LSTM Language Model. doi: 10.18653/V1/E17-2073. Wei, Li.,
-Brian, Kan., Wing, Mak. (2016). Recurrent Neural Network Language Model
+30 Wei, Li., Brian, Mak. (2017). Derivation of Document Vectors from
+Adaptation of LSTM Language Model.
+[doi: 10.18653/V1/E17-2073](doi: 10.18653/V1/E17-2073). Wei, Li., Brian,
+Kan., Wing, Mak. (2016). Recurrent Neural Network Language Model
 Adaptation Derived Document Vector.. arXiv: Computation and Language.
 Kaustubh, Keshav. (2022). Term Frequency Based Approach for Binary
 Classi?cations on Short Sentences. International Journal For Science
-Technology And Engineering, doi: 10.22214/ijraset.2022.47151 Samah,
-Senbel. (2021). Fast and Memory-Efficient TFIDF Calculation for Text
-Analysis of Large Datasets. doi: 10.1007/978-3-030-79457-6_47 Manaal,
-Faruqui., Chris, Dyer. (2015). Non-distributional Word Vector
-Representations. arXiv: Computation and Language, Guillaume, Desagulier.
+Technology And Engineering,
+[doi: 10.22214/ijraset.2022.47151](doi: 10.22214/ijraset.2022.47151).
+Samah, Senbel. (2021). Fast and Memory-Efficient TFIDF Calculation for
+Text Analysis of Large Datasets.
+[doi: 10.1007/978-3-030-79457-6_47](doi: 10.1007/978-3-030-79457-6_47).
+Manaal, Faruqui., Chris, Dyer. (2015). Non-distributional Word Vector
+Representations. arXiv: Computation and Language. Guillaume, Desagulier.
 (2019). Can word vectors help corpus linguists. Studia Neophilologica,
-doi: 10.1080/00393274.2019.1616220. Andrew, Ang., Andrew, Ang., Monika,
-Piazzesi., Monika, Piazzesi. (2001). A No-Arbitrage Vector
-Autoregression of Term Structure Dynamics with Macroeconomic and Latent
-Variables. Research Papers in Economics, John, R., Freeman., John, T.,
-Williams., Tse-min, Lin. (1989). Vector Autoregression and the Study of
-Politics. American Journal of Political Science, doi: 10.2307/2111112.
-H., T., Mcadams., R., W., Crawford., G., R., Hadder. (2000). A vector
-approach to regression analysis and its application to heavy-duty diesel
-emissions. SAE transactions, doi: 10.4271/2000-01-1961. Peter, Reusens.,
+[doi: 10.1080/00393274.2019.1616220](doi: 10.1080/00393274.2019.1616220).
+Andrew, Ang., Andrew, Ang., Monika, Piazzesi., Monika, Piazzesi. (2001).
+A No-Arbitrage Vector Autoregression of Term Structure Dynamics with
+Macroeconomic and Latent Variables. Research Papers in Economics. John,
+R., Freeman., John, T., Williams., Tse-min, Lin. (1989). Vector
+Autoregression and the Study of Politics. American Journal of Political
+Science, [doi: 10.2307/2111112](doi: 10.2307/2111112). H., T., Mcadams.,
+R., W., Crawford., G., R., Hadder. (2000). A vector approach to
+regression analysis and its application to heavy-duty diesel emissions.
+SAE transactions,
+[doi: 10.4271/2000-01-1961](doi: 10.4271/2000-01-1961). Peter, Reusens.,
 Christophe, Croux. (2015). Real or nominal variables, does it matter for
-the impulse response?. Social Science Research Network, doi:
-10.2139/SSRN.2577815. Dr., Deepali, , Jadhav, -Jagtap. (2023). A
-comparison of latent semantic analysis and correspondence analysis of
-document-term matrices. Natural Language Engineering, doi:
-10.1017/s1351324923000244. Fahrettin, Horasan., Hasan, Erbay., Fatih,
-Varçın., Emre, Deniz. (2019). Alternate Low-Rank Matrix Approximation in
-Latent Semantic Analysis. Scientific Programming, doi:
-10.1155/2019/1095643. Mattia, Egloff., François, Bavaud. (2018). Taking
-into account semantic similarities in correspondence analysis. Blei, D.
-M., Ng, A. Y., & Jordan, M. I. (2003). Latent Dirichlet Allocation.
-Journal of Machine Learning Research, 3, 993-1022. Dumais, S. T. (2004).
-Latent semantic analysis. Annual Review of Information Science and
-Technology, 38(1), 188-230. https://doi.org/10.1002/aris.1440380105. Di
-Domenico, G., Sit, J., Ishizaka, A., & Nunan, D. (2021). Fake news,
-social media and marketing: A systematic review. Journal of Business
-Research, 124, 329-341. He, S., Hollenbeck, B., & Proserpio, D. (2022).
-The market for fake reviews. Marketing Science, 41(5), 896-921.
-Feinerer, I., Hornik, K., & Feinerer, M. I. (2015). Package 'tm'.
-Corpus, 10(1). Feinerer, I. (2013). Introduction to the tm Package Text
-Mining in R. Accessible en ligne: http://cran. r-project.
-org/web/packages/tm/vignettes/tm. pdf. Benoit, K., Watanabe, K., Wang,
-H., Nulty, P., Obeng, A., Müller, S., & Matsuo, A. (2018). quanteda: An
-R package for the quantitative analysis of textual data. Journal of Open
-Source Software, 3(30), 774-774. Fay, C. (2018). Text mining with R: a
-tidy approach. Journal of Statistical Software, 83, 1-3. Hellín, C. J.,
-Valledor, A., Usero, L., Cuadrado-Gallego, J. J., Tayebi, A., & Gómez,
-J. (2023). A Comparative Study on R Packages for Text Mining. IEEE
-Access.
+the impulse response?. Social Science Research Network,
+[doi: 10.2139/SSRN.2577815](doi: 10.2139/SSRN.2577815). Dr., Deepali, ,
+Jadhav, -Jagtap. (2023). A comparison of latent semantic analysis and
+correspondence analysis of document-term matrices. Natural Language
+Engineering,
+[doi: 10.1017/s1351324923000244](doi: 10.1017/s1351324923000244).
+Fahrettin, Horasan., Hasan, Erbay., Fatih, Varçın., Emre, Deniz. (2019).
+Alternate Low-Rank Matrix Approximation in Latent Semantic Analysis.
+Scientific Programming,
+[doi: 10.1155/2019/1095643](doi: 10.1155/2019/1095643). Mattia, Egloff.,
+François, Bavaud. (2018). Taking into account semantic similarities in
+correspondence analysis. Blei, D. M., Ng, A. Y., & Jordan, M. I. (2003).
+Latent Dirichlet Allocation. Journal of Machine Learning Research, 3,
+993-1022. Dumais, S. T. (2004). Latent semantic analysis. Annual Review
+of Information Science and Technology, 38(1), 188-230.
+<https://doi.org/10.1002/aris.1440380105>. Di Domenico, G., Sit, J.,
+Ishizaka, A., & Nunan, D. (2021). Fake news, social media and marketing:
+A systematic review. Journal of Business Research, 124, 329-341. He, S.,
+Hollenbeck, B., & Proserpio, D. (2022). The market for fake reviews.
+Marketing Science, 41(5), 896-921. Feinerer, I., Hornik, K., & Feinerer,
+M. I. (2015). Package 'tm'. Corpus, 10(1). Feinerer, I. (2013).
+Introduction to the tm Package Text Mining in R. Accessible at
+[http://cran. r-project. org/web/packages/tm/vignettes/tm.pdf](http://cran. r-project. org/web/packages/tm/vignettes/tm.pdf).
+Benoit, K., Watanabe, K., Wang, H., Nulty, P., Obeng, A., Müller, S., &
+Matsuo, A. (2018). quanteda: An R package for the quantitative analysis
+of textual data. Journal of Open Source Software, 3(30), 774-774. Fay,
+C. (2018). Text mining with R: a tidy approach. Journal of Statistical
+Software, 83, 1-3. Hellín, C. J., Valledor, A., Usero, L.,
+Cuadrado-Gallego, J. J., Tayebi, A., & Gómez, J. (2023). A Comparative
+Study on R Packages for Text Mining. IEEE Access.
 :::
 
 [^1]: Dr. Kamakshaiah Musunuru, an academic of data science and
@@ -596,24 +603,29 @@ Access.
     +91-9848396972,
     [dr.m.kamakshaiah\@gmail.com](dr.m.kamakshaiah@gmail.com).
 
-[^2]: I have no plans to make a package in near by future because its
+[^2]: Citation:\
+    Musunuru, K. (2024). easytm: An easy way to text mining in R.
+    Available at https://github.com/Kamakshaiah/easytm.
+    https://doi.org/10.5281/zenodo.12799970
+
+[^3]: I have no plans to make a package in near by future because its
     still evolving but the source code is available at
     <https://github.com/Kamakshaiah/easytm>.
 
-[^3]: You can find the data file in the article companion Github portal.
+[^4]: You can find the data file in the article companion Github portal.
     <https://github.com/Kamakshaiah/easytm>
 
-[^4]: Visit <https://cran.r-project.org/web/packages/rvest/index.html>
+[^5]: Visit <https://cran.r-project.org/web/packages/rvest/index.html>
     for more information on web scrapping using `rvest` package.
 
-[^5]: Columns in DTM are called Term Frequency Vectors (TFV) and they
+[^6]: Columns in DTM are called Term Frequency Vectors (TFV) and they
     are considered as variables for investigation and analysis. Usually
     variables are obtained using a *pattern*. A pattern is something
     close to the concept called "factor"
 
-[^6]: The task was performed on 30th June, 2024
+[^7]: The task was performed on 30th June, 2024
 
-[^7]: Use `checkPrep()` and `updatePreps()` to check and update unwanted
+[^8]: Use `checkPrep()` and `updatePreps()` to check and update unwanted
     words.
 
-[^8]: 30th June, 2024
+[^9]: 30th June, 2024
