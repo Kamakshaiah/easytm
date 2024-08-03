@@ -6,7 +6,7 @@ title: "`easytm`: An easy way to text mining in R."
 
 [^1] [^2]
 
-# Abstract {#abstract .unnumbered}
+# Abstract
 
 The `easytm` script for R simplifies text mining by automating
 repetitive tasks like managing paths, creating data frame subsets, and
