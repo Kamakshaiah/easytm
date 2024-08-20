@@ -262,32 +262,32 @@ selectFeatures <- function(dataset, target = NA){
 #   }
 # }
 
-factanalTwoFactorPlot <- function(ds, l1=NA, l2=NA, tl = NA, xlim = NA, ylim = NA, cex = NA){
-  
+factanalPlot <- function(ds, nf = NA, l1=NA, l2=NA, tl = NA, xlim = c(-10, 10), ylim = c(-10, 10), cex = NA, pch = NA){
+  if (nf == 2){
     plot(l1,
          l2,
          xlab = "Factor 1",
          ylab = "Factor 2",
          ylim = ylim,
          xlim = xlim, cex =cex,
-         main = tl)
+         main = tl, pch=pch)
     abline(h = 0, v = 0)
     text(l1 - 0.08,
          l2 + 0.08,
          colnames(ds), cex = cex,
          col = "blue")
     abline(h = 0, v = 0)  
-  
+  } else {
     plot(l1,
          ylim = ylim,
-         xlim = xlim, cex = cex,
-         main = tl)
+         xlim = xlim, cex =cex,
+         main = tl, pch = pch)
     abline(h = 0, v = 0)
-    text(l1 - 0.08,
-         colnames(ds), cex = cex, 
-         col = "blue")
-    abline(h = 0, v = 0)
-  
+    text(l1, 
+         colnames(ds), cex = cex,
+         col = "blue", pos= 3)
+    abline(h = 0, v = 0)    
+  }
 }
 
 selectFeaturesAndMakeOutputs <- function(ds, term = NA, nc = NA, outputs = TRUE, outputpaths = NA){
@@ -306,16 +306,16 @@ selectFeaturesAndMakeOutputs <- function(ds, term = NA, nc = NA, outputs = TRUE,
   
 }
 
-factanalSingleFactorPlot <- function(ds, l1=NA, tl = NA, xlim = NA, ylim = NA, cex = NA){
-  
-  plot(l1,
-       ylim = ylim,
-       xlim = xlim, cex =cex,
-       main = tl)
-  abline(h = 0, v = 0)
-  text(l1, 
-       colnames(ds), cex = cex,
-       col = "blue", pos= 3)
-  abline(h = 0, v = 0)  
-  
-}
+# factanalSingleFactorPlot <- function(ds, l1=NA, tl = NA, xlim = c(-10, 10), ylim = c(-10, 10), cex = NA){
+#   
+#   plot(l1,
+#        ylim = ylim,
+#        xlim = xlim, cex =cex,
+#        main = tl)
+#   abline(h = 0, v = 0)
+#   text(l1, 
+#        colnames(ds), cex = cex,
+#        col = "blue", pos= 3)
+#   abline(h = 0, v = 0)  
+#   
+# }
