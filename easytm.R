@@ -319,3 +319,22 @@ selectFeaturesAndMakeOutputs <- function(ds, term = NA, nc = NA, outputs = TRUE,
 #   abline(h = 0, v = 0)  
 #   
 # }
+
+# dissimilar records
+
+m1 <- data.frame(matrix(1:16, 4, 4), row.names = c('r1', 'r2', 'r3', 'r4'))
+m2 <- data.frame(matrix(1:16, 4, 4), row.names = c('r1', 'r2', 'r5', 'r6'))
+
+dis
+
+mergeDataFrames <- function(df1, df2){
+  df3 <- rbind(df1, df2)
+  
+  common_ <- intersect(df1$authors, df2$authors)
+  commondf <- subset(df1, authors %in% common_) 
+  differentdf <- subset(df3, !authors %in% common_)
+  
+  final_ <- rbind(commondf, differentdf)
+  finaldf <- final_[order(final_$authors), ]
+  return(finaldf)
+}
